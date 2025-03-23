@@ -26,8 +26,10 @@ if sys.argv[1] == "3a_truthful":
 elif sys.argv[1] == "3a_balanced":
     command = "python3 auction.py --perms 1 --iters 200 --seed 2 Basmbb,5"
 elif sys.argv[1] == "3b_balanced":
-    command = "python3 auction.py --perms 10 --iters 100 Truthful,4 Basmbb,1"
+    command = "python3 auction.py --perms 10 --iters 200 Truthful,4 Basmbb,1"
 elif sys.argv[1] == "3b_truthful":
-    command = "python3 auction.py --perms 10 --iters 100 Truthful,1 Basmbb,4"
+    command = "python3 auction.py --perms 10 --iters 200 Truthful,1 Basmbb,4"
+elif sys.argv[1] == "5_testing":
+    command = "python3 auction.py --perms 1 --iters 200 Basmbudget,5"
 
 subprocess.run(command.split(" "))

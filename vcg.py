@@ -44,6 +44,11 @@ class VCG:
 
         (allocation, just_bids) = list(zip(*allocated_bids))
 
+        def get_position_effect(clicks):
+            position_effect = [_ / clicks[0] for _ in clicks]            
+            return position_effect
+
+
         # TODO: You just have to implement this function
         def total_payment(k):
             """
@@ -51,7 +56,8 @@ class VCG:
             """
             c = slot_clicks
             n = len(allocation)
-            m = len([x for x in allocation if x is not None]) 
+            m = len([x for x in allocation if x is not None])
+            pos = get_position_effect(c)
             
             # If position is not allocated, payment is 0
             if k >= m:
@@ -60,11 +66,13 @@ class VCG:
             # For the last allocated position
             if k == m - 1:
                 if m < len(bids):
+                    #return pos[k] * max(reserve, bids[m][1])
                     return c[k] * max(reserve, bids[m][1])
                 else:
+                    #return pos[k] * reserve
                     return c[k] * reserve
-                    
             else:
+                #return (pos[k] - pos[k+1]) * bids[k+1][1] + total_payment(k+1)
                 return (c[k] - c[k+1]) * bids[k+1][1] + total_payment(k+1)
 
         def norm(totals):

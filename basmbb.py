@@ -5,7 +5,7 @@ import sys
 from gsp import GSP
 from util import argmax_index
 
-class BasmAgent:
+class Basmbb:
     """Balanced bidding agent"""
     def __init__(self, id, value, budget):
         self.id = id
@@ -53,7 +53,7 @@ class BasmAgent:
         # compute position effect: pos_1 = c_1/c_1, pos_2 = c_2/c_1, ... pos_m = c_m/c_1
         # not sure if correct, but at least gives an idea of
         # how effective each position is wrt to each other
-        clicks = history.rounds[t-1].clicks
+        clicks = history.round(t-1).clicks
         position_effect = [_ / clicks[0] for _ in clicks]
         """
         Calculating utilities: Expected value of pos k is:

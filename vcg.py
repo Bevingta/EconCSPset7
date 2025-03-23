@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import time
 
 import random
 
@@ -50,8 +51,21 @@ class VCG:
             """
             c = slot_clicks
             n = len(allocation)
-
-            # TODO: Compute the payment and return it.
+            m = len([x for x in allocation if x is not None]) 
+            
+            # If position is not allocated, payment is 0
+            if k >= m:
+                return 0
+                
+            # For the last allocated position
+            if k == m - 1:
+                if m < len(bids):
+                    return c[k] * max(reserve, bids[m][1])
+                else:
+                    return c[k] * reserve
+                    
+            else:
+                return (c[k] - c[k+1]) * bids[k+1][1] + total_payment(k+1)
 
         def norm(totals):
             """Normalize total payments by the clicks in each slot"""

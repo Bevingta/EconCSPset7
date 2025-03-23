@@ -7,7 +7,7 @@ import sys
 # subprocess.run([])
 
 n = len(sys.argv)
-recognized_arguments = ["3a_truthful", "3a_balanced", "3b_balanced", "3b_truthful"]
+recognized_arguments = ["3a_truthful", "3a_balanced", "3b_balanced", "3b_truthful", "5_testing"]
 
 if n < 2:
     print("Command-line argument needed. Try:")
@@ -30,6 +30,6 @@ elif sys.argv[1] == "3b_balanced":
 elif sys.argv[1] == "3b_truthful":
     command = "python3 auction.py --perms 10 --iters 200 Truthful,1 Basmbb,4"
 elif sys.argv[1] == "5_testing":
-    command = "python3 auction.py --perms 1 --iters 200 Basmbudget,5"
+    command = "python3 auction.py --perms 1 --iters 200 --num-rounds 48 --mech=gsp --budget 6000 BasmBudget,5"
 
 subprocess.run(command.split(" "))

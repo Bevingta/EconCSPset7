@@ -49,6 +49,7 @@ class Basmbb:
 
         returns a list of utilities per slot.
         """
+        print(f"ROUND NUMBER: {t}")
         # TODO: Fill this in
         # compute position effect: pos_1 = c_1/c_1, pos_2 = c_2/c_1, ... pos_m = c_m/c_1
         # not sure if correct, but at least gives an idea of

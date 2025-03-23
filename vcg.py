@@ -67,13 +67,13 @@ class VCG:
             if k == m - 1:
                 if m < len(bids):
                     #return pos[k] * max(reserve, bids[m][1])
-                    return c[k] * max(reserve, bids[m][1])
+                    return pos[k] * c[k] * max(reserve, bids[m][1])
                 else:
                     #return pos[k] * reserve
-                    return c[k] * reserve
+                    return pos[k] * c[k] * reserve
             else:
                 #return (pos[k] - pos[k+1]) * bids[k+1][1] + total_payment(k+1)
-                return (c[k] - c[k+1]) * bids[k+1][1] + total_payment(k+1)
+                return (pos[k] * c[k] - pos[k+1] * c[k+1]) * bids[k+1][1] + total_payment(k+1)
 
         def norm(totals):
             """Normalize total payments by the clicks in each slot"""

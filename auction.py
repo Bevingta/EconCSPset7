@@ -15,6 +15,7 @@ import math
 import pprint
 import random
 import sys
+import traceback
 
 from gsp import GSP
 from vcg import VCG
@@ -381,6 +382,6 @@ def main(args):
         #print a,"'s added values is", av_value[a.id]
 
 
-
 if __name__ == "__main__":
+
     main(sys.argv)

@@ -87,18 +87,8 @@ class BasmBudget:
         the other-agent bid for that slot in the last round.  If slot_id = 0,
         max_bid is min_bid * 2
         """
-        expected_utils = self.expected_utils(t, history, reserve)
-        i =  argmax_index(expected_utils)
+        i =  argmax_index(self.expected_utils(t, history, reserve))
         info = self.slot_info(t, history, reserve)
-
-        """
-            Assuming that we always bid min_bid, we are going to re-choose the max that allows us to pay less than .75 of our value.
-        """
-        if t < 24:
-            while info[i][1] > .75 * self.value:
-                del expected_utils[i]
-                i = argmax_index(expected_utils)
-
         return info[i]
 
     def bid(self, t, history, reserve):
@@ -112,19 +102,16 @@ class BasmBudget:
         # (p_x is the price/click in slot x)
         # If s*_j is the top slot, bid the value v_j
 
-        prev_round = history.round(t-1)
         (slot, min_bid, max_bid) = self.target_slot(t, history, reserve)
 
-        # calculating position effects again here, maybe a separate function?
-        clicks = prev_round.clicks
-        position_effect = [_ / clicks[0] for _ in clicks]
+        # TODO: Fill this in.
         bid = 0  # change this
 
         """
-            Solving the balanced bidding for b_i^t, given that the price_j is the min_bid, and position effects are calculated before hand.
+            bidding max_bid - 1 in order to drain other players
         """
         if slot != 0 and min_bid < self.value:
-            bid = self.value - (position_effect[slot] / position_effect[slot-1]) * (self.value - min_bid)
+            bid = max_bid - 1
         else:  # j == 0 or min_bid > self.value
             bid = self.value
         

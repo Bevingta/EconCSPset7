@@ -5,7 +5,7 @@ import sys
 from gsp import GSP
 from util import argmax_index
 
-class Basmbb:
+class BasmCheapskate:
     """Balanced bidding agent"""
     def __init__(self, id, value, budget):
         self.id = id
@@ -87,9 +87,23 @@ class Basmbb:
         the other-agent bid for that slot in the last round.  If slot_id = 0,
         max_bid is min_bid * 2
         """
-        i =  argmax_index(self.expected_utils(t, history, reserve))
+        expected_utils = self.expected_utils(t, history, reserve)
+        i =  argmax_index(expected_utils)
         info = self.slot_info(t, history, reserve)
-        return info[i]
+
+        """
+            Assuming that we always bid min_bid, we are going to re-choose the max that allows us to pay less than .75 of our value.
+        """
+        if t < 24:
+            while info[i][1] > .90 * self.value and len(expected_utils) > 0:
+                del expected_utils[i]
+                if len(expected_utils) > 0:
+                    i = argmax_index(expected_utils)
+
+        if len(expected_utils) > 0:
+            return info[i]
+        else:
+            return info[-1]
 
     def bid(self, t, history, reserve):
         # The Balanced bidding strategy (BB) is the strategy for a player j that, given
@@ -105,7 +119,6 @@ class Basmbb:
         prev_round = history.round(t-1)
         (slot, min_bid, max_bid) = self.target_slot(t, history, reserve)
 
-        # TODO: Fill this in.
         # calculating position effects again here, maybe a separate function?
         clicks = prev_round.clicks
         position_effect = [_ / clicks[0] for _ in clicks]

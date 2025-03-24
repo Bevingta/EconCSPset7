@@ -36,7 +36,7 @@ elif sys.argv[1] == "5_aggro":
 elif sys.argv[1] == "5_minbid":
     command = "python3 auction.py --perms 1 --iters 200 --num-rounds 48 --mech=gsp --budget 6000 BasmMinBid,5"
 elif sys.argv[1] == "5_testing":
-    command = "python3 auction.py --iters 100 --num-rounds 48 --mech=gsp --budget 6000 BasmCheapskate,1 BasmAggro,1 BasmMinBid,1 Truthful,1 Basmbb,1"
+    command = "python3 auction.py --iters 25 --num-rounds 48 --mech=gsp --budget 6000 BasmCheapskate,1 BasmAggro,1 BasmMinBid,1 Truthful,1 Basmbb,1"
 elif sys.argv[1] == "5_testing_perms":
     command = "python3 auction.py --perms 24 --iters 100 --num-rounds 48 --mech=gsp --budget 6000 BasmCheapskate,1 BasmAggro,1 BasmMinBid,1 Truthful,1 Basmbb,1"
 subprocess.run(command.split(" "))

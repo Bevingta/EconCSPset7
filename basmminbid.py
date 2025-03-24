@@ -5,7 +5,7 @@ import sys
 from gsp import GSP
 from util import argmax_index
 
-class BasmBudget:
+class BasmMinBid:
     """Balanced bidding agent"""
     def __init__(self, id, value, budget):
         self.id = id
@@ -102,16 +102,20 @@ class BasmBudget:
         # (p_x is the price/click in slot x)
         # If s*_j is the top slot, bid the value v_j
 
+        prev_round = history.round(t-1)
         (slot, min_bid, max_bid) = self.target_slot(t, history, reserve)
 
         # TODO: Fill this in.
+        # calculating position effects again here, maybe a separate function?
+        clicks = prev_round.clicks
+        position_effect = [_ / clicks[0] for _ in clicks]
         bid = 0  # change this
 
         """
-            bidding max_bid - 1 in order to drain other players
+            Solving the balanced bidding for b_i^t, given that the price_j is the min_bid, and position effects are calculated before hand.
         """
         if slot != 0 and min_bid < self.value:
-            bid = max_bid - 1
+            bid = min_bid + 1
         else:  # j == 0 or min_bid > self.value
             bid = self.value
         
